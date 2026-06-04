@@ -43,8 +43,10 @@ Depending on the selected target, it updates:
 ```
 
 After Codex installation, run `/hooks` inside Codex, review the added command
-hooks, and trust them. If Claude Code does not pick up the hook immediately,
-restart Claude Code or reload settings.
+hooks, and trust them. If the hook does not take effect, exit Codex, start it
+again, then run `/hooks` and trust the command hooks.
+If Claude Code does not pick up the hook immediately, restart Claude Code or
+reload settings.
 
 ## Features
 
@@ -175,7 +177,13 @@ CLAUDE_AGENT_VOICE_MUTE=1  # Mute only under the Claude provider
 Change the macOS voice:
 
 ```bash
-AGENT_VOICE=Meijia python3 notify.py
+echo '{"hook_event_name":"PermissionRequest","tool_name":"Bash"}' \
+  | AGENT_VOICE=Meijia python3 notify.py --provider codex
+```
+
+```bash
+echo '{"hook_event_name":"Notification","notification_type":"permission_prompt"}' \
+  | AGENT_VOICE=Meijia python3 notify.py --provider claude
 ```
 
 ## What It Says

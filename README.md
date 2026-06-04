@@ -43,6 +43,7 @@ python3 install.py all
 ```
 
 Codex 安装后，在 Codex 里运行 `/hooks`，检查新增 command hooks，并选择 trust。
+如果没有生效，退出 Codex 后重新进入，再运行 `/hooks` 并选择 trust。
 Claude Code 如果没有立刻加载新 hook，请重启 Claude Code 或重新加载设置。
 
 ## 功能
@@ -171,7 +172,13 @@ CLAUDE_AGENT_VOICE_MUTE=1  # 只在 Claude provider 下静音
 切换 macOS 语音：
 
 ```bash
-AGENT_VOICE=Meijia python3 notify.py
+echo '{"hook_event_name":"PermissionRequest","tool_name":"Bash"}' \
+  | AGENT_VOICE=Meijia python3 notify.py --provider codex
+```
+
+```bash
+echo '{"hook_event_name":"Notification","notification_type":"permission_prompt"}' \
+  | AGENT_VOICE=Meijia python3 notify.py --provider claude
 ```
 
 ## 播报文案
