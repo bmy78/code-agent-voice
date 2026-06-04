@@ -8,6 +8,21 @@ through hooks and speaks short prompts through the macOS built-in `say` command.
 The script only reads hook payloads and decides whether to announce the event.
 It never approves, denies, rewrites, or blocks Codex or Claude Code actions.
 
+## Quick Start
+
+```bash
+git clone git@github.com:bmy78/code-agent-voice.git
+cd code-agent-voice
+python3 install.py all
+```
+
+After installation:
+
+- Codex: run `/hooks`, review the added command hooks, and trust them. If the
+  hook does not take effect, restart Codex and trust the hooks.
+- Claude Code: if the hook is not picked up immediately, restart Claude Code or
+  reload settings.
+
 ## Install
 
 Install Codex hooks only:
@@ -43,10 +58,25 @@ Depending on the selected target, it updates:
 ```
 
 After Codex installation, run `/hooks` inside Codex, review the added command
-hooks, and trust them. If the hook does not take effect, exit Codex, start it
-again, then run `/hooks` and trust the command hooks.
+hooks, and trust them. If the hook does not take effect, restart Codex and trust
+the hooks.
 If Claude Code does not pick up the hook immediately, restart Claude Code or
 reload settings.
+
+## Support
+
+Currently supported:
+
+- Codex hooks
+- Claude Code hooks
+- macOS voice output
+- Python 3.10 or newer
+
+Not currently supported:
+
+- Native Windows/Linux voice output
+- Mobile push notifications
+- Slack, Telegram, Webhook, or other external notifications
 
 ## Features
 
@@ -65,6 +95,15 @@ reload settings.
 - Python 3.10 or newer.
 - Codex hooks or Claude Code hooks support.
 - macOS for actual voice output through `say`.
+
+## Safety
+
+Code Agent Voice only reads hook payloads and announces status. It never
+approves, denies, modifies commands, or blocks Codex or Claude Code behavior.
+
+Before installing, you can review the hook templates in `templates/`. The
+installer only merges the corresponding command hooks into `~/.codex/hooks.json`
+and/or `~/.claude/settings.json`.
 
 ## Test
 
@@ -196,6 +235,26 @@ echo '{"hook_event_name":"Notification","notification_type":"permission_prompt"}
 - Claude Code waiting for input: `Claude Code 正在等待你的输入。`
 - Claude Code tool failure: `Claude Code 执行工具失败。`
 - Claude Code turn ended: `Claude Code 当前回合已结束。`
+
+## FAQ
+
+### No sound?
+
+- Make sure you are on macOS.
+- Run `say -v '?'` to see available voices.
+- Use `AGENT_VOICE_DRY_RUN=1` first to confirm the script prints a message.
+- For Codex, run `/hooks` and trust the hooks. If it still does not work,
+  restart Codex and trust the hooks.
+- For Claude Code, restart Claude Code or reload settings.
+
+### Do config changes require a restart?
+
+No. Changes to `~/.code-agent-voice/config.json` take effect on the next hook
+run.
+
+### Can I customize the spoken messages?
+
+Yes. Edit the `messages` fields in `~/.code-agent-voice/config.json`.
 
 ## Uninstall
 

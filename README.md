@@ -8,6 +8,19 @@
 脚本只读取 hook payload，并根据事件类型决定是否播报。它不会审批、拒绝、改写或阻塞 Codex
 或 Claude Code 的任何行为。
 
+## 快速开始
+
+```bash
+git clone git@github.com:bmy78/code-agent-voice.git
+cd code-agent-voice
+python3 install.py all
+```
+
+安装后：
+
+- Codex：运行 `/hooks`，检查新增 command hooks，并选择 trust。如未生效，重启 Codex 并 trust。
+- Claude Code：如果没有立刻加载新 hook，请重启 Claude Code 或重新加载设置。
+
 ## 安装
 
 只安装 Codex：
@@ -43,8 +56,23 @@ python3 install.py all
 ```
 
 Codex 安装后，在 Codex 里运行 `/hooks`，检查新增 command hooks，并选择 trust。
-如果没有生效，退出 Codex 后重新进入，再运行 `/hooks` 并选择 trust。
+如未生效，重启 Codex 并 trust。
 Claude Code 如果没有立刻加载新 hook，请重启 Claude Code 或重新加载设置。
+
+## 支持范围
+
+当前支持：
+
+- Codex hooks
+- Claude Code hooks
+- macOS 语音播报
+- Python 3.10 或更高版本
+
+暂不支持：
+
+- Windows/Linux 原生语音播报
+- 手机推送
+- Slack、Telegram、Webhook 等外部通知
 
 ## 功能
 
@@ -61,6 +89,14 @@ Claude Code 如果没有立刻加载新 hook，请重启 Claude Code 或重新�
 - Python 3.10 或更高版本。
 - Codex hooks 或 Claude Code hooks 支持。
 - macOS 才能实际语音播报。
+
+## 安全说明
+
+Code Agent Voice 只读取 hook payload 并播报状态。它不会审批、拒绝、修改命令，也不会阻塞 Codex
+或 Claude Code 的行为。
+
+安装前可以查看 `templates/` 目录里的 hook 模板，安装器只会把对应 command hooks 合并进
+`~/.codex/hooks.json` 和/或 `~/.claude/settings.json`。
 
 ## 测试
 
@@ -191,6 +227,24 @@ echo '{"hook_event_name":"Notification","notification_type":"permission_prompt"}
 - Claude Code 等待输入：`Claude Code 正在等待你的输入。`
 - Claude Code 工具失败：`Claude Code 执行工具失败。`
 - Claude Code 回合结束：`Claude Code 当前回合已结束。`
+
+## 常见问题
+
+### 没声音怎么办？
+
+- 确认当前系统是 macOS。
+- 运行 `say -v '?'` 查看可用 voice。
+- 先用 `AGENT_VOICE_DRY_RUN=1` 确认脚本能输出文案。
+- Codex 用户运行 `/hooks` 并 trust；如未生效，重启 Codex 并 trust。
+- Claude Code 用户重启 Claude Code 或重新加载设置。
+
+### 修改配置后要重启吗？
+
+不用。修改 `~/.code-agent-voice/config.json` 后，下一次 hook 触发时自动生效。
+
+### 可以改播报文案吗？
+
+可以。编辑 `~/.code-agent-voice/config.json` 里的 `messages` 字段即可。
 
 ## 卸载
 
