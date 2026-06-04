@@ -1,0 +1,53 @@
+{
+  "enabled": true,
+  "voice": "Tingting",
+  "providers": {
+    "codex": {
+      "events": {
+        "PermissionRequest": true,
+        "PostToolUseError": true,
+        "StopCompleted": true,
+        "StopEnded": true,
+        "SubagentStop": false,
+        "SessionStart": false,
+        "PreCompact": false,
+        "PostCompact": false
+      },
+      "messages": {
+        "permission": "Codex 需要你确认操作。",
+        "tool_failure": "Codex 执行命令失败。",
+        "stop": "Codex 当前回合已结束。",
+        "completed": "Codex 已完成当前任务。",
+        "subagent_stop": "Codex 子 Agent 已结束。",
+        "session_start": "Codex 会话已开始。",
+        "pre_compact": "Codex 即将整理上下文。",
+        "post_compact": "Codex 已整理上下文。"
+      }
+    },
+    "claude": {
+      "events": {
+        "Notification": {
+          "permission_prompt": true,
+          "idle_prompt": true
+        },
+        "PermissionRequest": true,
+        "PostToolUseFailure": true,
+        "Stop": true,
+        "SubagentStop": false,
+        "SessionStart": false,
+        "PreCompact": false,
+        "PostCompact": false
+      },
+      "messages": {
+        "permission": "Claude Code 需要你确认操作。",
+        "idle": "Claude Code 正在等待你的输入。",
+        "tool_failure": "Claude Code 执行工具失败。",
+        "stop": "Claude Code 当前回合已结束。",
+        "subagent_stop": "Claude Code 子 Agent 已结束。",
+        "session_start": "Claude Code 会话已开始。",
+        "pre_compact": "Claude Code 即将整理上下文。",
+        "post_compact": "Claude Code 已整理上下文。"
+      }
+    }
+  }
+}
